@@ -1,0 +1,29 @@
+{
+  "commercialPricePerSqftAdder": 1,
+  "njTaxRate": 0.06625,
+  "minimumProjectInvestment": 350,
+  "estimateRangeLowMultiplier": 0.9,
+  "estimateRangeHighMultiplier": 1.1,
+  "roundToNearest": 10,
+  "dimensionMinInches": 6,
+  "dimensionMaxInches": 200,
+  "requireLeadBeforeEstimate": true,
+  "filmTypes": {
+    "solar-ceramic": { "label": "Solar Control – Ceramic (Non-Reflective Premium)", "pricePerSqft": 15 },
+    "solar-reflective": { "label": "Solar Control – Metallized (Reflective/Mirror)", "pricePerSqft": 12 },
+    "uv-clear": { "label": "UV Protection – Clear/Neutral", "pricePerSqft": 16 },
+    "decorative": { "label": "Decorative – Frost/White Out/Black Out", "pricePerSqft": 13 },
+    "safety-security": { "label": "Safety – Security Film", "pricePerSqft": 16 }
+  },
+  "perSqftAdders": {
+    "woodFrame": 1,
+    "skylight": 3,
+    "customShape": 3,
+    "exteriorInstall": 3,
+    "existingFilmRemovalMin": 2,
+    "existingFilmRemovalMax": 3
+  },
+  "flatAdders": {
+    "stairwellPerWindow": 150
+  }
+}
