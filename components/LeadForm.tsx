@@ -17,10 +17,10 @@ export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: Lead
   } = useFormContext<{ lead: LeadInfo }>();
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-card">
-      <h3 className="text-lg font-semibold text-slate-800 mb-4">Contact details</h3>
+    <div className="rounded-xl border border-slate-200 border-t-4 border-t-[#17A147] bg-white p-6 shadow-card">
+      <h3 className="text-lg font-semibold text-[#23575E] mb-4">Contact details</h3>
       <p className="text-sm text-slate-600 mb-4">
-        Optional: share your details if you’d like us to follow up. We will not share your data.
+        Share your details if you’d like us to follow up. We will not share your data.
       </p>
 
       {submitError && (
@@ -31,7 +31,7 @@ export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: Lead
 
       <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Name (optional)</label>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Name</label>
           <input
             type="text"
             className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900"
@@ -43,7 +43,7 @@ export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: Lead
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Email (optional)</label>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Email</label>
           <input
             type="email"
             className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900"
@@ -55,7 +55,7 @@ export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: Lead
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Phone (optional)</label>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Phone</label>
           <input
             type="tel"
             className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900"
@@ -67,7 +67,7 @@ export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: Lead
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">ZIP code (optional)</label>
+          <label className="mb-1 block text-sm font-medium text-slate-700">ZIP code</label>
           <input
             type="text"
             placeholder="e.g. 07024"
@@ -80,7 +80,7 @@ export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: Lead
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Notes (optional)</label>
+          <label className="mb-1 block text-sm font-medium text-slate-700">Notes</label>
           <textarea
             rows={3}
             placeholder="Any specific questions or project details..."
@@ -105,7 +105,7 @@ export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: Lead
         <button
           type="submit"
           disabled={disabled || isSubmitting}
-          className="w-full rounded-lg bg-slate-800 text-white py-3 text-sm font-medium hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-lg bg-[#17A147] py-3 text-sm font-medium text-white hover:bg-[#128a3d] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isSubmitting ? "Submitting…" : "Submit my details"}
         </button>

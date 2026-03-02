@@ -50,7 +50,7 @@ const frameOptions: { value: FrameType; label: string }[] = [
 ];
 
 const shapeOptions: { value: ShapeType; label: string }[] = [
-  { value: "rectangle", label: "Rectangle / Square" },
+  { value: "rectangle", label: "Rectangle/Square" },
   { value: "skylight", label: "Skylight" },
   { value: "custom", label: "Other (Custom)" },
 ];
@@ -96,7 +96,7 @@ export function WindowForm({
 
   if (!isExpanded) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
+      <div className="rounded-xl border border-slate-200 border-l-4 border-l-[#8BD0A3] bg-white p-4 shadow-card">
         <div className="flex items-center justify-between gap-3">
           <button
             type="button"
@@ -129,11 +129,11 @@ export function WindowForm({
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
+    <div className="rounded-xl border border-slate-200 border-l-4 border-l-[#8BD0A3] bg-white p-5 shadow-card">
       <div className="mb-4 flex items-center justify-between gap-2">
         <input
           type="text"
-          className="flex-1 min-w-0 text-lg font-semibold text-slate-800 bg-transparent border border-transparent rounded px-1 -ml-1 hover:border-slate-300 focus:border-slate-400 focus:outline-none"
+          className="flex-1 min-w-0 text-lg font-semibold text-[#23575E] bg-transparent border border-transparent rounded px-1 -ml-1 hover:border-[#8BD0A3] focus:border-[#17A147] focus:outline-none"
           placeholder={`Window ${index + 1}`}
           {...register(`windows.${index}.label`, { required: "Name is required" })}
         />

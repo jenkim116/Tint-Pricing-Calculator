@@ -12,7 +12,7 @@
     "solar-ceramic": { "label": "Solar Control – Ceramic (Non-Reflective Premium)", "pricePerSqft": 15 },
     "solar-reflective": { "label": "Solar Control – Metallized (Reflective/Mirror)", "pricePerSqft": 12 },
     "uv-clear": { "label": "UV Protection – Clear/Neutral", "pricePerSqft": 16 },
-    "decorative": { "label": "Decorative – Frost/White Out/Black Out", "pricePerSqft": 13 },
+    "decorative": { "label": "Privacy – Frost/White Out/Black Out", "pricePerSqft": 13 },
     "safety-security": { "label": "Safety – Security Film", "pricePerSqft": 16 }
   },
   "perSqftAdders": {

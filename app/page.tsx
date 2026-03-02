@@ -97,13 +97,13 @@ export default function Home() {
   });
 
   const { control, watch, getValues, setValue } = methods;
-  const { fields, append, remove } = useFieldArray({ control, name: "windows" });
+  const { fields, append, remove, replace } = useFieldArray({ control, name: "windows" });
 
   const handleAddWindow = useCallback(() => {
-    const current = getValues("windows");
-    const nextIndex = (current?.length ?? 0);
-    const next = [...(current || []), createDefaultWindow(nextIndex)];
-    setValue("windows", next, { shouldValidate: false, shouldDirty: true });
+    const current = getValues("windows") ?? [];
+    const nextIndex = current.length;
+    const next = [...current, createDefaultWindow(nextIndex)];
+    replace(next);
     setWindowExpandState((prev) => {
       const nextExpanded = new Set(prev.expanded);
       nextExpanded.add(nextIndex);
@@ -116,7 +116,7 @@ export default function Home() {
       }
       return { expanded: nextExpanded, hasBeenAutoCollapsed: nextAuto };
     });
-  }, [getValues, setValue]);
+  }, [getValues, replace]);
 
   // Subscribe to entire form so we re-render when any field changes. Compute estimate every render
   // so edits to window fields (after e.g. submitting lead) always update the summary; watch("windows")
@@ -191,17 +191,11 @@ export default function Home() {
   return (
     <FormProvider {...methods}>
       <div className="min-h-screen bg-slate-50">
-        <header className="border-b border-slate-200 bg-white shadow-sm">
-          <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
-            <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">
+        <header className="border-b-2 border-[#23575E] bg-white shadow-sm">
+          <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6 text-center">
+            <h1 className="text-2xl font-semibold text-[#23575E] sm:text-3xl">
               Instant Window Film Estimate
             </h1>
-            <p className="mt-1 text-sm text-slate-600">
-              Vizta Tint of North Jersey — Architectural window film installation
-            </p>
-            <p className="mt-2 text-xs text-slate-500">
-              Final pricing depends on glass type, access, and onsite conditions.
-            </p>
           </div>
         </header>
 
@@ -209,15 +203,15 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[1fr,320px]">
             <div className="space-y-6">
               <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
-                <h2 className="text-lg font-semibold text-slate-800 mb-3">Project type</h2>
-                <div className="flex rounded-lg border border-slate-200 p-1 bg-slate-100">
+                <h2 className="text-lg font-semibold text-[#23575E] mb-3">Project type</h2>
+                <div className="flex rounded-lg border border-[#23575E] p-1 bg-slate-100">
                   <button
                     type="button"
                     onClick={() => setProjectType("residential")}
                     className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
                       projectType === "residential"
-                        ? "bg-white text-slate-900 shadow-sm"
-                        : "text-slate-600 hover:text-slate-900"
+                        ? "bg-[#23575E] text-white shadow-sm"
+                        : "text-slate-600 hover:text-[#23575E]"
                     }`}
                   >
                     Residential
@@ -227,8 +221,8 @@ export default function Home() {
                     onClick={() => setProjectType("commercial")}
                     className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
                       projectType === "commercial"
-                        ? "bg-white text-slate-900 shadow-sm"
-                        : "text-slate-600 hover:text-slate-900"
+                        ? "bg-[#23575E] text-white shadow-sm"
+                        : "text-slate-600 hover:text-[#23575E]"
                     }`}
                   >
                     Commercial
@@ -289,7 +283,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={handleAddWindow}
-                  className="mt-4 w-full rounded-lg border-2 border-dashed border-slate-300 py-3 text-sm font-medium text-slate-600 hover:border-slate-400 hover:bg-slate-50 transition-colors"
+                  className="mt-4 w-full rounded-lg border-2 border-dashed border-[#8BD0A3] py-3 text-sm font-medium text-[#23575E] hover:border-[#17A147] hover:bg-[#e8f7ed] transition-colors"
                 >
                   + Add another window
                 </button>
@@ -303,9 +297,10 @@ export default function Home() {
                 windowCount={fields.length}
                 requireLeadBeforeEstimate={requireLeadBeforeEstimate}
                 leadSubmitted={leadSubmitted}
+                leadEmail={watch("lead.email")}
               />
               <section id="lead-form">
-                <h2 className="text-2xl font-bold text-slate-900 text-center mb-4 tracking-tight">
+                <h2 className="text-2xl font-bold text-[#23575E] text-center mb-4 tracking-tight">
                 Contact us to verify your price
               </h2>
                 <LeadForm
@@ -319,9 +314,9 @@ export default function Home() {
           </div>
         </main>
 
-        <footer className="border-t border-slate-200 bg-white mt-12 py-6">
+        <footer className="border-t border-[#8BD0A3] bg-white mt-12 py-6">
           <div className="mx-auto max-w-4xl px-4 text-center text-xs text-slate-500">
-            © Vizta Tint of North Jersey. Estimates are not binding. Site assessment may be required.
+            <p>© Vizta Tint of North Jersey. Estimates are not binding. Final pricing confirmed after verifying glass type, access, and site conditions.</p>
           </div>
         </footer>
       </div>
