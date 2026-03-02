@@ -23,6 +23,7 @@ export interface WindowInput {
   location: LocationType;
   topAbove15Feet: boolean;
   existingFilmRemoval?: boolean;
+  frenchPanes?: boolean;
   filmTypeId: FilmTypeId | "";
 }
 
@@ -150,6 +151,7 @@ export function computeWindowLineItem(
   const addersConfig = cfg.perSqftAdders as {
     existingFilmRemovalMin?: number;
     existingFilmRemovalMax?: number;
+    frenchPanes?: number;
   };
   const filmRemovalMin = addersConfig.existingFilmRemovalMin ?? 2;
   const filmRemovalMax = addersConfig.existingFilmRemovalMax ?? 3;
@@ -158,7 +160,12 @@ export function computeWindowLineItem(
   if (filmRemovalAdder > 0) {
     perSqftBreakdown.push(`Existing film removal: $${filmRemovalMin}–$${filmRemovalMax}/sqft`);
   }
-  const perSqftAdders = perSqftAddersBase + filmRemovalAdder;
+  const frenchPanesPerSqft = addersConfig.frenchPanes ?? 2;
+  const frenchPanesAdder = input.frenchPanes ? sqft * frenchPanesPerSqft : 0;
+  if (frenchPanesAdder > 0) {
+    perSqftBreakdown.push(`French panes: $${frenchPanesPerSqft}/sqft`);
+  }
+  const perSqftAdders = perSqftAddersBase + filmRemovalAdder + frenchPanesAdder;
 
   const flatAddersConfig = pricingConfig.flatAdders as { stairwellPerWindow: number };
   const flatAddersPerWindow = input.location === "stairwell" ? flatAddersConfig.stairwellPerWindow : 0;
@@ -236,6 +243,7 @@ export function getPricingConfig() {
       exteriorInstall: number;
       existingFilmRemovalMin?: number;
       existingFilmRemovalMax?: number;
+      frenchPanes?: number;
     };
     flatAdders: { stairwellPerWindow: number };
     commercialPricePerSqftAdder?: number;

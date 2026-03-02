@@ -17,6 +17,20 @@ function ChevronDownIcon() {
     </svg>
   );
 }
+
+function InfoIcon() {
+  return (
+    <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  );
+}
+
 import { getPricingConfig } from "@/lib/pricing";
 import type { WindowEntry } from "@/lib/types";
 import type { FrameType, ShapeType, FilmTypeId } from "@/lib/types";
@@ -305,6 +319,20 @@ export function WindowForm({
                 {...register(`windows.${index}.existingFilmRemoval`)}
               />
               <span className="text-sm font-medium text-slate-800">Existing film removal required</span>
+            </label>
+            <label className="flex cursor-pointer items-start gap-3">
+              <input
+                type="checkbox"
+                className="mt-1 h-4 w-4 rounded border-slate-300 text-slate-600"
+                {...register(`windows.${index}.frenchPanes`)}
+              />
+              <span className="text-sm font-medium text-slate-800">French panes</span>
+              <span className="group relative ml-1 inline-flex text-slate-400 hover:text-slate-600 cursor-help">
+                <InfoIcon />
+                <span className="pointer-events-none absolute left-0 top-full z-10 mt-1.5 hidden w-56 rounded-md border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-600 shadow-md group-hover:block sm:w-64">
+                  French panes are small glass panes arranged in a grid within a window or door frame
+                </span>
+              </span>
             </label>
           </div>
         </div>

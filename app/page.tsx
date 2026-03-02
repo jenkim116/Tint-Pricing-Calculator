@@ -31,6 +31,7 @@ const windowSchema = z.object({
   location: z.enum(["standard", "stairwell"]),
   topAbove15Feet: z.boolean(),
   existingFilmRemoval: z.boolean(),
+  frenchPanes: z.boolean(),
   filmTypeId: z.string(), // "" = blank
 });
 
@@ -62,6 +63,7 @@ function createDefaultWindow(index: number = 0): WindowEntry {
     location: "standard",
     topAbove15Feet: false,
     existingFilmRemoval: false,
+    frenchPanes: false,
     filmTypeId: "",
   };
 }
@@ -81,6 +83,7 @@ const defaultValues: FormValues = {
 export default function Home() {
   const [projectType, setProjectType] = useState<"residential" | "commercial">("residential");
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [leadSubmitError, setLeadSubmitError] = useState<string | null>(null);
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
   const [windowExpandState, setWindowExpandState] = useState<{
     expanded: Set<number>;
@@ -136,7 +139,8 @@ export default function Home() {
             location: w.location as LocationType,
             topAbove15Feet: !!w.topAbove15Feet,
             existingFilmRemoval: !!w.existingFilmRemoval,
-            filmTypeId: w.filmTypeId ?? "",
+            frenchPanes: !!w.frenchPanes,
+            filmTypeId: (w.filmTypeId ?? "") as FilmTypeId,
           })),
           projectType
         );
@@ -158,9 +162,11 @@ export default function Home() {
         location: w.location,
         topAbove15Feet: w.topAbove15Feet,
         existingFilmRemoval: w.existingFilmRemoval,
+        frenchPanes: w.frenchPanes,
         filmTypeId: w.filmTypeId,
       })),
     };
+    setLeadSubmitError(null);
     setIsSubmittingLead(true);
     try {
       const res = await fetch("/api/estimate", {
@@ -168,12 +174,15 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Submit failed");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setLeadSubmitError(data.error || "Submission failed. Please try again.");
+        return;
+      }
       setLeadSubmitted(true);
     } catch (e) {
       console.error(e);
-      // Still show estimate in MVP if API fails (log-only)
-      setLeadSubmitted(true);
+      setLeadSubmitError("Network error. Please check your connection and try again.");
     } finally {
       setIsSubmittingLead(false);
     }
@@ -234,19 +243,32 @@ export default function Home() {
                       key={field.id}
                       index={index}
                       onRemove={() => {
-                        remove(index);
-                        setWindowExpandState((prev) => {
-                          const expanded = new Set(
-                            [...prev.expanded].filter((i) => i !== index).map((i) => (i > index ? i - 1 : i))
-                          );
-                          const hasBeenAutoCollapsed = new Set(
-                            [...prev.hasBeenAutoCollapsed].filter((i) => i !== index).map((i) => (i > index ? i - 1 : i))
-                          );
-                          if (expanded.size === 0 && fields.length > 1) expanded.add(Math.max(0, index - 1));
-                          return { expanded, hasBeenAutoCollapsed };
-                        });
+                        if (fields.length === 1) {
+                          const id = fields[0].id;
+                          setValue("windows", [{ ...createDefaultWindow(0), id }], {
+                            shouldValidate: false,
+                            shouldDirty: true,
+                          });
+                          setWindowExpandState((prev) => ({
+                            ...prev,
+                            expanded: new Set([0]),
+                            hasBeenAutoCollapsed: new Set(),
+                          }));
+                        } else {
+                          remove(index);
+                          setWindowExpandState((prev) => {
+                            const expanded = new Set(
+                              Array.from(prev.expanded).filter((i) => i !== index).map((i) => (i > index ? i - 1 : i))
+                            );
+                            const hasBeenAutoCollapsed = new Set(
+                              Array.from(prev.hasBeenAutoCollapsed).filter((i) => i !== index).map((i) => (i > index ? i - 1 : i))
+                            );
+                            if (expanded.size === 0) expanded.add(Math.max(0, index - 1));
+                            return { expanded, hasBeenAutoCollapsed };
+                          });
+                        }
                       }}
-                      canRemove={fields.length > 1}
+                      canRemove={true}
                       isExpanded={windowExpandState.expanded.has(index)}
                       onExpand={() =>
                         setWindowExpandState((prev) => ({
@@ -289,7 +311,8 @@ export default function Home() {
                 <LeadForm
                   onSubmit={handleLeadSubmit}
                   isSubmitting={isSubmittingLead}
-                  disabled={!estimate || estimate.specialEquipmentRequired}
+                  disabled={false}
+                  submitError={leadSubmitError}
                 />
               </section>
             </aside>

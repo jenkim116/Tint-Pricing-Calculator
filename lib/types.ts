@@ -11,6 +11,7 @@ export interface WindowEntry {
   location: LocationType;
   topAbove15Feet: boolean;
   existingFilmRemoval: boolean;
+  frenchPanes: boolean;
   filmTypeId: FilmTypeId | "";
 }
 

@@ -21,7 +21,8 @@
     "customShape": 3,
     "exteriorInstall": 3,
     "existingFilmRemovalMin": 2,
-    "existingFilmRemovalMax": 3
+    "existingFilmRemovalMax": 3,
+    "frenchPanes": 2
   },
   "flatAdders": {
     "stairwellPerWindow": 150

@@ -36,7 +36,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Project Structure
 
 - `app/page.tsx` — main calculator page and form state
-- `app/api/estimate/route.ts` — POST endpoint for lead submission (logs payload; hooks for Zapier/Make/Sheets commented)
+- `app/api/estimate/route.ts` — POST endpoint for lead submission; appends to Google Sheet when env is set
 - `components/WindowForm.tsx` — per-window fields (dimensions, frame, shape, install type, location, film, 15 ft question)
 - `components/Summary.tsx` — live estimate summary and range
 - `components/LeadForm.tsx` — name, email, phone, ZIP, notes, SMS consent
@@ -72,4 +72,30 @@ Edit `config/pricing.json` to:
 }
 ```
 
-MVP logs the payload. See `app/api/estimate/route.ts` for commented Zapier/Make/Google Sheets integration.
+Each submission is logged. If Google Sheets env is set, a row is appended (see below).
+
+### Google Sheets
+
+Two options. **Use Option A (Apps Script)** if your Google org blocks service account key creation.
+
+**Option A — Apps Script (no keys, works when org blocks keys)**
+
+1. Open your Google Sheet → **Extensions** → **Apps Script**. Delete any sample code.
+2. Copy the script from **`docs/google-sheets-apps-script.js`** into the editor and save.
+3. **Deploy** → **New deployment** → type **Web app**:
+   - Description: e.g. "Lead form webhook"
+   - **Execute as:** Me
+   - **Who has access:** Anyone
+4. Click **Deploy**, authorize when prompted, then copy the **Web app URL** (ends in `/exec`).
+5. In `.env.local` set:  
+   `GOOGLE_APPS_SCRIPT_WEBHOOK_URL=<that URL>`  
+   (You do **not** need `GOOGLE_SHEET_ID` or any service account vars.)
+6. Optional: add a header row in the sheet: `Timestamp`, `Name`, `Email`, `Phone`, `Zip`, `Notes`, `SMS Consent`, `Project Type`, `Estimate Low`, `Estimate High`, `Window Count`.
+
+**Option B — Service account (Google Cloud key)**
+
+1. Google Cloud: enable Sheets API, create a Service Account, download JSON key.
+2. Share the sheet with the service account email (Editor). Copy the Sheet ID from the sheet URL.
+3. In `.env.local` set `GOOGLE_SHEET_ID`, `GOOGLE_CLIENT_EMAIL`, and `GOOGLE_PRIVATE_KEY` (from the JSON).
+
+New submissions are appended as rows (columns A–K). Option A appends to the **active** sheet of the spreadsheet where the script is bound.

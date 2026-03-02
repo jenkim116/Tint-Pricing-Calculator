@@ -7,9 +7,10 @@ interface LeadFormProps {
   onSubmit: () => void;
   isSubmitting: boolean;
   disabled?: boolean;
+  submitError?: string | null;
 }
 
-export function LeadForm({ onSubmit, isSubmitting, disabled }: LeadFormProps) {
+export function LeadForm({ onSubmit, isSubmitting, disabled, submitError }: LeadFormProps) {
   const {
     register,
     formState: { errors },
@@ -21,6 +22,12 @@ export function LeadForm({ onSubmit, isSubmitting, disabled }: LeadFormProps) {
       <p className="text-sm text-slate-600 mb-4">
         Optional: share your details if you’d like us to follow up. We will not share your data.
       </p>
+
+      {submitError && (
+        <p className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-800">
+          {submitError}
+        </p>
+      )}
 
       <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
         <div>
