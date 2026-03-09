@@ -5,6 +5,11 @@
 :root {
   --background: #fafafa;
   --foreground: #0f172a;
+  /* Brand teal palette — single source of truth */
+  --brand: 35 87 94;         /* #23575E */
+  --brand-hover: 26 69 74;   /* #1a454a */
+  --brand-light: 74 138 146; /* #4a8a92 */
+  --brand-50: 220 232 234;   /* #dce8ea */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,10 +30,10 @@ body {
   }
 }
 
-/* Focus rings use brand green */
+/* Focus rings use brand primary */
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 button:focus-visible {
-  @apply outline-none ring-2 ring-[#17A147]/50 ring-offset-2;
+  @apply outline-none ring-2 ring-brand/50 ring-offset-2;
 }

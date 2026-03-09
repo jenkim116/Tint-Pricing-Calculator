@@ -23,7 +23,7 @@ export function Summary({
   const [emailError, setEmailError] = useState<string | null>(null);
   if (windowCount === 0) {
     return (
-      <div className="rounded-xl border border-slate-200 border-t-4 border-t-[#8BD0A3] bg-white p-6 shadow-card">
+      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-card">
         <p className="text-slate-500 text-center py-8">Add at least one window to see your estimate.</p>
       </div>
     );
@@ -31,7 +31,7 @@ export function Summary({
 
   if (!estimate) {
     return (
-      <div className="rounded-xl border border-slate-200 border-t-4 border-t-[#8BD0A3] bg-white p-6 shadow-card">
+      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-card">
         <p className="text-slate-500 text-center py-8">Complete window details to calculate.</p>
       </div>
     );
@@ -45,8 +45,8 @@ export function Summary({
   const formatPrice = (value: number) => (specialEquipment ? "N/A" : `$${value.toFixed(2)}`);
 
   return (
-    <div className="rounded-xl border border-slate-200 border-t-4 border-t-[#17A147] bg-white p-6 shadow-card">
-      <h3 className="text-lg font-semibold text-[#23575E] mb-4">Estimate summary</h3>
+    <div className="rounded-xl border border-slate-200 border-t-4 border-t-brand bg-white p-6 shadow-card">
+      <h3 className="text-lg font-semibold text-brand mb-4">Estimate summary</h3>
 
       <div className={`space-y-3 text-sm ${inactiveClasses}`}>
         {lineItems.length > 0 ? (
@@ -104,7 +104,7 @@ export function Summary({
       {showPriceRange && (
         <div className="mt-4 pt-4 border-t border-slate-200">
           <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">Estimated range</p>
-          <p className="text-2xl font-semibold text-[#23575E]">
+          <p className="text-2xl font-semibold text-brand">
             ${estimate.low.toLocaleString()} – ${estimate.high.toLocaleString()}
           </p>
           <p className="text-xs text-slate-500 mt-1">Final pricing confirmed after on-site verification.</p>

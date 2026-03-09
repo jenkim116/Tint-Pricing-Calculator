@@ -13,18 +13,12 @@ const config: Config = {
         serif: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       colors: {
+        // From globals.css :root — brand teal + same-hue accents
         brand: {
-          dark: "#23575E",
-          DEFAULT: "#17A147",
-          light: "#8BD0A3",
-          white: "#FFFFFF",
-          // for hover states and focus
-          50: "#e8f7ed",
-          100: "#c8edd4",
-          200: "#8BD0A3",
-          500: "#17A147",
-          600: "#128a3d",
-          800: "#23575E",
+          DEFAULT: "rgb(var(--brand) / <alpha-value>)",
+          hover: "rgb(var(--brand-hover) / <alpha-value>)",
+          light: "rgb(var(--brand-light) / <alpha-value>)",
+          50: "rgb(var(--brand-50) / <alpha-value>)",
         },
       },
       boxShadow: {

@@ -36,10 +36,10 @@ const windowSchema = z.object({
 });
 
 const leadSchema = z.object({
-  name: z.string(),
-  email: z.string().refine((v) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), { message: "Invalid email" }),
-  phone: z.string(),
-  zipCode: z.string(),
+  name: z.string().min(1, "Full name is required"),
+  email: z.string().min(1, "Email is required").refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), { message: "Invalid email" }),
+  phone: z.string().min(1, "Phone number is required"),
+  zipCode: z.string().min(1, "Zip code is required").max(5, "Zip code must be 5 digits").regex(/^\d{1,5}$/, "Zip code must be numeric"),
   notes: z.string(),
   smsConsent: z.boolean(),
 });
@@ -191,11 +191,32 @@ export default function Home() {
   return (
     <FormProvider {...methods}>
       <div className="min-h-screen bg-slate-50">
-        <header className="border-b-2 border-[#23575E] bg-white shadow-sm">
+        <header className="border-b-2 border-brand bg-white shadow-sm">
           <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6 text-center">
-            <h1 className="text-2xl font-semibold text-[#23575E] sm:text-3xl">
+            <h1 className="text-2xl font-semibold text-brand sm:text-3xl">
               Instant Window Film Estimate
             </h1>
+            <p className="mt-3 text-sm text-slate-600">
+              Vizta Tint of North Jersey – Architectural Window Film Installation
+            </p>
+            <div className="mt-1 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-slate-600">
+              <a href="tel:973-313-5313" className="hover:text-brand hover:underline">
+                973-313-5313
+              </a>
+              <span aria-hidden="true">•</span>
+              <a href="mailto:nj@viztatint.com" className="hover:text-brand hover:underline">
+                nj@viztatint.com
+              </a>
+              <span aria-hidden="true">•</span>
+              <a
+                href="https://www.viztatintnj.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-brand hover:underline"
+              >
+                www.viztatintnj.com
+              </a>
+            </div>
           </div>
         </header>
 
@@ -203,15 +224,15 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[1fr,320px]">
             <div className="space-y-6">
               <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
-                <h2 className="text-lg font-semibold text-[#23575E] mb-3">Project type</h2>
-                <div className="flex rounded-lg border border-[#23575E] p-1 bg-slate-100">
+                <h2 className="text-lg font-semibold text-brand mb-3">Project type</h2>
+                <div className="flex rounded-lg border border-brand p-1 bg-slate-100">
                   <button
                     type="button"
                     onClick={() => setProjectType("residential")}
                     className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
                       projectType === "residential"
-                        ? "bg-[#23575E] text-white shadow-sm"
-                        : "text-slate-600 hover:text-[#23575E]"
+                        ? "bg-brand text-white shadow-sm"
+                        : "text-slate-600 hover:text-brand"
                     }`}
                   >
                     Residential
@@ -221,8 +242,8 @@ export default function Home() {
                     onClick={() => setProjectType("commercial")}
                     className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
                       projectType === "commercial"
-                        ? "bg-[#23575E] text-white shadow-sm"
-                        : "text-slate-600 hover:text-[#23575E]"
+                        ? "bg-brand text-white shadow-sm"
+                        : "text-slate-600 hover:text-brand"
                     }`}
                   >
                     Commercial
@@ -283,7 +304,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={handleAddWindow}
-                  className="mt-4 w-full rounded-lg border-2 border-dashed border-[#8BD0A3] py-3 text-sm font-medium text-[#23575E] hover:border-[#17A147] hover:bg-[#e8f7ed] transition-colors"
+                  className="mt-4 w-full rounded-lg border-2 border-dashed border-brand-light py-3 text-sm font-medium text-brand hover:border-brand hover:bg-brand-50 transition-colors"
                 >
                   + Add another window
                 </button>
@@ -300,9 +321,6 @@ export default function Home() {
                 leadEmail={watch("lead.email")}
               />
               <section id="lead-form">
-                <h2 className="text-2xl font-bold text-[#23575E] text-center mb-4 tracking-tight">
-                Contact us to verify your price
-              </h2>
                 <LeadForm
                   onSubmit={handleLeadSubmit}
                   isSubmitting={isSubmittingLead}
@@ -314,7 +332,7 @@ export default function Home() {
           </div>
         </main>
 
-        <footer className="border-t border-[#8BD0A3] bg-white mt-12 py-6">
+        <footer className="border-t border-brand-light bg-white mt-12 py-6">
           <div className="mx-auto max-w-4xl px-4 text-center text-xs text-slate-500">
             <p>© Vizta Tint of North Jersey. Estimates are not binding. Final pricing confirmed after verifying glass type, access, and site conditions.</p>
           </div>
