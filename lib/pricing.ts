@@ -35,6 +35,13 @@ export interface WindowLineItem {
   flatAdders: number;
   windowTotal: number;
   breakdown: string[];
+  /** Display for PDF */
+  filmLabel?: string;
+  widthInches?: number;
+  heightInches?: number;
+  frameLabel?: string;
+  shapeLabel?: string;
+  optionLabels?: string[];
 }
 
 export interface ProjectEstimate {
@@ -53,6 +60,18 @@ export interface ProjectEstimate {
 const INCHES_PER_SQFT = 144;
 /** Added to width and height for sqft calculation only (trim allowance); not shown in UI. */
 const TRIM_INCHES = 1;
+
+const FRAME_LABELS: Record<string, string> = {
+  vinyl: "Vinyl",
+  metal: "Metal",
+  rubberGasket: "Rubber Gasket",
+  wood: "Wood",
+};
+const SHAPE_LABELS: Record<string, string> = {
+  rectangle: "Rectangle/Square",
+  skylight: "Skylight",
+  custom: "Custom",
+};
 
 function roundToNearest(value: number, nearest: number): number {
   return Math.round(value / nearest) * nearest;
@@ -183,6 +202,12 @@ export function computeWindowLineItem(
     ...flatBreakdown,
   ].filter(Boolean);
 
+  const optionLabels: string[] = [];
+  if (input.location === "stairwell") optionLabels.push("Stairwell access");
+  if (input.topAbove15Feet) optionLabels.push("Top of frame exceeds 15 ft");
+  if (input.existingFilmRemoval) optionLabels.push("Existing film removal required");
+  if (input.frenchPanes) optionLabels.push("French panes");
+
   return {
     label: displayLabel,
     sqft: Math.round(sqft * 100) / 100,
@@ -191,6 +216,12 @@ export function computeWindowLineItem(
     flatAdders: Math.round(flatAdders * 100) / 100,
     windowTotal: Math.round(windowTotal * 100) / 100,
     breakdown,
+    filmLabel: filmConfig?.label,
+    widthInches: input.widthInches,
+    heightInches: input.heightInches,
+    frameLabel: frameType ? FRAME_LABELS[frameType] ?? frameType : undefined,
+    shapeLabel: shape ? SHAPE_LABELS[shape] ?? shape : undefined,
+    optionLabels: optionLabels.length > 0 ? optionLabels : undefined,
   };
 }
 
