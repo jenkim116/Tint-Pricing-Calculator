@@ -197,7 +197,8 @@ export default function Home() {
               Instant Window Film Estimate
             </h1>
             <p className="mt-3 text-sm text-slate-600">
-              Vizta Tint of North Jersey – Architectural Window Film Installation
+              Vizta Tint of North Jersey –
+              <span className="block sm:inline">Architectural Window Film Installation</span>
             </p>
             <div className="mt-1 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-slate-600">
               <a href="tel:973-313-5313" className="hover:text-brand hover:underline">
