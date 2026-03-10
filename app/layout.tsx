@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     "Get an estimated price range for architectural window film installation. Professional solar control, decorative, and safety film.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

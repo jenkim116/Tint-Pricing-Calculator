@@ -190,9 +190,9 @@ export default function Home() {
 
   return (
     <FormProvider {...methods}>
-      <div className="min-h-screen bg-slate-50">
-        <header className="border-b-2 border-brand bg-white shadow-sm">
-          <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6 text-center">
+      <div className="min-h-screen w-full max-w-[100vw] bg-slate-50 overflow-x-hidden flex flex-col items-center">
+        <header className="w-full border-b-2 border-brand bg-white shadow-sm">
+          <div className="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 text-center box-border">
             <h1 className="text-2xl font-semibold text-brand sm:text-3xl">
               Instant Window Film Estimate
             </h1>
@@ -220,10 +220,10 @@ export default function Home() {
           </div>
         </header>
 
-        <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-          <div className="grid gap-8 lg:grid-cols-[1fr,320px]">
-            <div className="space-y-6">
-              <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
+        <main className="w-full max-w-4xl px-4 py-8 sm:px-6 box-border flex-1">
+          <div className="grid gap-8 lg:grid-cols-[1fr,320px] min-w-0 w-full max-w-full">
+            <div className="space-y-6 min-w-0 w-full">
+              <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-card min-w-0 max-w-full">
                 <h2 className="text-lg font-semibold text-brand mb-3">Project type</h2>
                 <div className="flex rounded-lg border border-brand p-1 bg-slate-100">
                   <button
@@ -312,7 +312,7 @@ export default function Home() {
 
             </div>
 
-            <aside className="lg:sticky lg:top-6 lg:self-start space-y-6">
+            <aside className="lg:sticky lg:top-6 lg:self-start space-y-6 min-w-0 w-full max-w-full">
               <Summary
                 estimate={estimate}
                 windowCount={fields.length}
@@ -332,8 +332,8 @@ export default function Home() {
           </div>
         </main>
 
-        <footer className="border-t border-brand-light bg-white mt-12 py-6">
-          <div className="mx-auto max-w-4xl px-4 text-center text-xs text-slate-500">
+        <footer className="w-full border-t border-brand-light bg-white mt-12 py-6">
+          <div className="mx-auto w-full max-w-4xl px-4 text-center text-xs text-slate-500 box-border">
             <p>© Vizta Tint of North Jersey. Estimates are not binding. Final pricing confirmed after verifying glass type, access, and site conditions.</p>
           </div>
         </footer>
