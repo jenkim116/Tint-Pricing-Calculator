@@ -193,6 +193,14 @@ export default function Home() {
       <div className="min-h-screen w-full max-w-[100vw] bg-slate-50 overflow-x-hidden flex flex-col items-center">
         <header className="w-full border-b-2 border-brand bg-white shadow-sm">
           <div className="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 text-center box-border">
+            <div className="flex justify-center mb-4">
+              {/* Add your logo file to public/logo.png (or .svg) */}
+              <img
+                src="/logo.png"
+                alt="Vizta Tint of North Jersey"
+                className="h-12 w-auto object-contain sm:h-14"
+              />
+            </div>
             <h1 className="text-2xl font-semibold text-brand sm:text-3xl">
               Instant Window Film Estimate
             </h1>
